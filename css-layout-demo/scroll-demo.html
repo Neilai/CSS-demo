@@ -1,0 +1,47 @@
+<!--Created by Neil-->
+<!--2018-02-02 22:51-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="divParent"  style="padding: 8px; background-color: #aaa; height:200px; width:300px; overflow:auto" >
+    <div id="divChild" style="background-color: #0f0;height: 400px; width: 500px; border: solid 10px #f00;">
+    </div>
+</div>
+<script type="text/javascript">
+    divChild.innerHTML = "";
+    var scrollwidth = divParent.scrollWidth;
+    var scrollheight = divParent.scrollHeight;
+    var scrolltop = divParent.scrollTop;
+    var scrollleft = divParent.scrollLeft;
+    divChild.innerHTML += 'scrollwidth: ' + scrollwidth + '<br />';
+    divChild.innerHTML += 'scrollheight: ' + scrollheight + '<br />';
+    divChild.innerHTML += 'scrolltop: ' + scrolltop + '<br />';
+    divChild.innerHTML += 'scrollleft: ' + scrollleft + '<br />';
+    var pagexoffset = window.pageXOffset;
+    var pageyoffset = window.pageYOffset;
+    divChild.innerHTML += 'pagexoffset: ' + pagexoffset + '<br />';
+    divChild.innerHTML += 'pageyoffset: ' + pageyoffset + '<br />';
+    divParent.onscroll = function () {
+        divChild.innerHTML = "";
+        var scrollwidth = divParent.scrollWidth;
+        var scrollheight = divParent.scrollHeight;
+        var scrolltop = divParent.scrollTop;
+        var scrollleft = divParent.scrollLeft;
+        var pagexoffset = window.pageXOffset;
+        var pageyoffset = window.pageYOffset;
+        divChild.innerHTML += 'scrollwidth: ' + scrollwidth + '<br />';
+        divChild.innerHTML += 'scrollheight: ' + scrollheight + '<br />';
+        divChild.innerHTML += 'scrolltop: ' + scrolltop + '<br />';
+        divChild.innerHTML += 'scrollleft: ' + scrollleft + '<br />';
+        divChild.innerHTML += 'pagexoffset: ' + pagexoffset + '<br />';
+        divChild.innerHTML += 'pageyoffset: ' + pageyoffset + '<br />';
+    }
+    //scrollwidth=子div的宽度(500)+子div的边框(10*2)+父容器的padding（8）=528
+    // scrollwidth=子div的高度(400)+子div的边框(10*2)+父容器的padding（8）=428
+</script>
+</body>
+</html>
