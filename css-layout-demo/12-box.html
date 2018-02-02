@@ -1,0 +1,31 @@
+<!--Created by Neil-->
+<!--${YEAR}-${MONTH}-${DAY} ${HOUR}:${MINUTE}-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #flexbox {
+            width: 100%;
+            border: solid 2px red ;
+            display: -webkit-box;
+            -webkit-box-orient: horizontal;
+        }
+        #flexbox > p:nth-child(3) {
+            -webkit-box-flex: 1;
+        }
+        p{
+            border:solid 2px green;
+        }
+
+    </style>
+</head>
+<body>
+<div id="flexbox">
+    <p>child 1</p>
+    <p>child 2</p>
+    <p>child 3</p>
+</div>
+</body>
+</html>
