@@ -2,9 +2,118 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
 </head>
-<body>
+<body style="height: 1000px; " >
+<div style="height:3000px ; width:400px;overflow: scroll" >
 
+    <div style=" width: 300px; height: 100px; background:#000; position:fixed;top:0px" id="box1"></div>
+    <div style=" width: 300px; height: 100px; background:red;top:100px;position:fixed" id="box2"></div>
+</div>
+<script>
+    //这里是答题区
+</script>
 </body>
+<script>
+ document.onmousewheel=function (e) {
+     speed=Math.abs(e.wheelDelta);
+     a=document.getElementById("box1");
+     b=document.getElementById("box2");
+
+//     startMove(a,{"top":"100"},  function(){
+//         startMove(a,{"top":"0"},undefined,10);
+//     },10)
+//     startMove(b,{"top":"200"}, function(){
+//         startMove(b,{"top":"100"},undefined,30);
+//     },30)
+
+     constantMove(a,{"top":"100"},30,function () {
+         constantMove(a,{"top":"0"},30)
+     });
+     constantMove(b,{"top":"200"},10,function () {
+         constantMove(b,{"top":"100"},10);
+     });
+ }
+
+ function constantMove(obj, json, time ,fn) {
+     clearInterval(obj.timer);//清除定时器，避免重复生成多个定时器
+     var speed ={};
+
+     for(var attr in json){
+         speed[attr]=(parseInt(json[attr])-parseInt(getStyle(obj,attr)))/10;
+     }
+
+     obj.timer = setInterval(function () {
+         var flag = true;//假设刚开始时所有运动都已完成
+         for (var attr in json) {//遍历json
+             var icur = null;
+             if (attr == 'opacity') {
+                 icur = Math.ceil(parseFloat(getStyle(obj, attr)) * 100);
+             } else {
+                 icur = parseInt(getStyle(obj, attr));
+             }
+             if (attr == 'opacity') {
+                 obj.style.filter = 'alpha(opacity:' + (icur + speed[attr]) + ')';
+                 obj.style.opacity = (icur + speed[attr]) / 100;
+             } else {
+                 obj.style[attr] = icur + speed[attr] + 'px';
+             }
+             if ( ((icur>json[attr])&&speed[attr]<0 ) || ((icur<json[attr])&&speed[attr]>0 )) {
+                 flag = false;
+             }
+             else
+                 obj.style[attr] = json[attr] + 'px';
+         }
+         if (flag) {//当所有运动都完成时，清除定时器
+             clearInterval(obj.timer);
+             if (fn) {
+                 fn();
+             }
+         }
+     }, time);
+ }
+
+    function getStyle(obj, attr) {
+        if (obj.currentStyle) {
+            return obj.currentStyle[attr];    }
+        else {
+            return getComputedStyle(obj, false)[attr];    }}
+//    function startMove(obj, json, fn,time) {
+//        clearInterval(obj.timer);//清除定时器，避免重复生成多个定时器
+//        obj.timer = setInterval(function () {
+//            var flag = true;//假设刚开始时所有运动都已完成
+//            for (var attr in json) {//遍历json
+//                var icur = null;
+////1.判断类型
+//                if (attr == 'opacity') {
+//                    icur = Math.round(parseFloat(getStyle(obj, attr)) * 100);
+//                } else {
+//                    icur = parseInt(getStyle(obj, attr));
+//                }
+////2.算速度
+//                var speed = 10;
+////                speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
+////3.检测停止
+//                if (icur != json[attr]) {
+//                    flag = false;
+//                }
+//                if (attr == 'opacity') {
+//                    obj.style.filter = 'alpha(opacity:' + (icur + speed) + ')';
+//                    obj.style.opacity = (icur + speed) / 100;
+//                } else {
+//                    obj.style[attr] = icur + speed + 'px';
+//                }
+////                console.log(speed);
+////                console.log(obj.style[attr]);
+//            }
+//
+//            if (flag) {//当所有运动都完成时，清除定时器
+//                clearInterval(obj.timer);
+////                console.log(fn);
+//                if (fn) {
+//                    fn();
+//                }
+//            }
+//        }, time);
+//    }
+</script>
 </html>
